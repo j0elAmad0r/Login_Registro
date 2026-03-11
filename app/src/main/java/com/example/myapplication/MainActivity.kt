@@ -6,7 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -24,13 +24,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.myapplication.ui.theme.MyApplicationTheme
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.res.painterResource
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.foundation.clickable
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,9 +42,34 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             MyApplicationTheme {
+                // estado que controla que pantalla mostrar
+                var mostrarLogin by remember { mutableStateOf(true) }
+
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    // Login(modifier = Modifier.padding(innerPadding))
-                    Registro(modifier = Modifier.padding(innerPadding))
+
+                    if (mostrarLogin) {
+                        Login(
+                            modifier = Modifier.padding(innerPadding),
+
+                            // cuando el usuario toca registrarse
+                            onRegisterClick = {
+                                mostrarLogin = false
+                            }
+                        )
+
+                    } else {
+
+                        Registro(
+                            modifier = Modifier.padding(innerPadding),
+
+                            // cuando el usuario toca volver al login
+                            onLoginClick = {
+                                mostrarLogin = true
+                            }
+                        )
+
+                    }
+
                 }
             }
         }
@@ -48,7 +77,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Login(modifier: Modifier = Modifier) {
+fun Login(modifier: Modifier = Modifier, onRegisterClick: () -> Unit) {
 
     Box(
         modifier = modifier
@@ -141,11 +170,7 @@ fun Login(modifier: Modifier = Modifier) {
 
                 Spacer(modifier = Modifier.height(6.dp))
 
-                // -------------------------------
-                // CAMPO PASSWORD
-                // Aquí luego puedes agregar
-                // icono de mostrar contraseña
-                // -------------------------------
+
                 TextField(
                     value = "",
                     onValueChange = {},
@@ -187,6 +212,9 @@ fun Login(modifier: Modifier = Modifier) {
 
                 Text(
                     text = "¿No tienes cuenta? Registrate",
+                    modifier = Modifier.clickable {
+                        onRegisterClick()
+                    },
                     fontSize = 13.sp,
                     color = Color.Gray
                 )

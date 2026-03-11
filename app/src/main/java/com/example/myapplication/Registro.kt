@@ -2,6 +2,7 @@ package com.example.myapplication
 import androidx.compose.material3.Card
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -31,14 +32,11 @@ import androidx.compose.ui.res.painterResource
     @Preview(showBackground = true)
     @Composable
     fun RegisterPreview() {
-        Registro()
+        Registro(onLoginClick = {})
     }
 
-
-
     @Composable
-    fun Registro(modifier: Modifier = Modifier) {
-
+    fun Registro(modifier: Modifier = Modifier, onLoginClick: () -> Unit) {
         Box(
             modifier = modifier
                 .fillMaxSize()
@@ -195,7 +193,11 @@ import androidx.compose.ui.res.painterResource
                     Text(
                         text = "¿Ya tienes cuenta? Dirigetew al LogIn",
                         fontSize = 13.sp,
-                        color = Color.Gray
+                        color = Color.Gray,
+                        // Regreso a login
+                        modifier = Modifier.clickable {
+                            onLoginClick()
+                        }
                     )
                 }
             }
