@@ -78,6 +78,8 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Login(modifier: Modifier = Modifier, onRegisterClick: () -> Unit) {
+    var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
 
     Box(
         modifier = modifier
@@ -116,10 +118,8 @@ fun Login(modifier: Modifier = Modifier, onRegisterClick: () -> Unit) {
                 modifier = Modifier
                     .padding(28.dp)
                     .fillMaxWidth(),
-
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-
                 Box(
                     modifier = Modifier
                         .height(70.dp)
@@ -152,8 +152,8 @@ fun Login(modifier: Modifier = Modifier, onRegisterClick: () -> Unit) {
                 Spacer(modifier = Modifier.height(6.dp))
 
                 TextField(
-                    value = "",
-                    onValueChange = {},
+                    value = email,
+                    onValueChange = { email = it },
                     placeholder = { Text("email@gmail.com") },
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(12.dp)
@@ -172,8 +172,8 @@ fun Login(modifier: Modifier = Modifier, onRegisterClick: () -> Unit) {
 
 
                 TextField(
-                    value = "",
-                    onValueChange = {},
+                    value = password,
+                    onValueChange = { password = it },
                     placeholder = { Text("••••••••") },
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(12.dp)
@@ -191,13 +191,14 @@ fun Login(modifier: Modifier = Modifier, onRegisterClick: () -> Unit) {
                 Spacer(modifier = Modifier.height(24.dp))
 
                 Button(
-                    onClick = {},
+                    onClick = {
+                        println("Email: $email")
+                        println("Password: $password")
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(52.dp),
-
                     shape = RoundedCornerShape(50.dp),
-
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color(0xFF2563EB)
                     )
