@@ -56,7 +56,11 @@ class MainActivity : ComponentActivity() {
                                 mostrarLogin = false
                             }
                         )
-
+                        if (mostrarLogin) {
+                            setContent {
+                                VistaContactos()
+                            }
+                        }
                     } else {
 
                         Registro(
